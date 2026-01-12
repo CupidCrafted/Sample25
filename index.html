@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Valentine 💜</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #B39CD0; /* lilac background */
+  font-family:'Dancing Script', cursive;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* FLOATING HEARTS */
+.heart {
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:red;
+  clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 25%, 85% 50%, 50% 100%, 15% 50%, 15% 25%, 25% 15%, 39% 15%);
+  animation: floatHeart 5s linear infinite;
+  opacity:0.7;
+}
+@keyframes floatHeart {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-150px) translateX(30px); }
+  100% { transform: translateY(-300px) translateX(-20px); }
+}
+
+/* COMMON CONTAINER */
+.container {
+  max-width:900px;
+  width:100%;
+  text-align:center;
+  padding:20px;
+}
+
+/* HEADINGS */
+h1,h2 { margin-bottom:20px; color:#fff; }
+h1 { font-size:3rem; font-weight:700; }
+h2 { font-size:2.2rem; font-weight:700; }
+
+/* TEXT */
+p { line-height:2; font-size:1.3rem; color:#fff; }
+
+/* INPUTS */
+input {
+  width:100%;
+  max-width:400px;
+  padding:12px;
+  margin:10px auto;
+  display:block;
+  border:1px solid #fff;
+  background:transparent;
+  color:#fff;
+  font-size:1rem;
+  text-align:center;
+}
+input::placeholder { color:#f0e6f3; }
+
+/* BUTTONS */
+button {
+  padding:12px 35px;
+  margin:10px;
+  border:1px solid #fff;
+  background:transparent;
+  color:#fff;
+  font-size:1rem;
+  cursor:pointer;
+  transition:0.3s;
+  border-radius:8px;
+}
+button:hover { background:#fff; color:#B39CD0; }
+.back-btn { margin-top:25px; font-size:0.95rem; }
+
+/* HIDDEN */
+.hidden { display:none; }
+
+/* LETTER PAGE */
+.letter-container {
+  max-width:500px;
+  width:90%;
+  background:#FFF8F0; /* cream paper */
+  padding:45px 35px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  position:relative;
+  overflow:hidden;
+  color:#4b1a75; /* ink purple */
+  line-height:1.9;
+  font-size:1.5rem;
+  font-weight:500;
+}
+.letter-container::before {
+  content:"";
+  position:absolute;
+  top:20px;
+  left:15px;
+  right:15px;
+  bottom:20px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 25px,
+    rgba(200,180,170,0.2) 26px
+  );
+  pointer-events:none;
+  border-radius:15px;
+}
+.letter-container::after {
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background-image:url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  opacity:0.08;
+  pointer-events:none;
+  border-radius:15px;
+}
+
+/* GALLERY PAGE */
+.gallery {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+}
+.gallery img {
+  width:45%;
+  max-width:200px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  cursor:pointer;
+  transition:0.3s;
+}
+.gallery img:hover { transform:scale(1.05); }
+
+/* MOBILE */
+@media(max-width:500px){
+  .letter-container { font-size:1.3rem; padding:35px 25px; }
+  h2 { font-size:2rem; }
+  button { font-size:0.95rem; padding:10px 25px; }
+  .gallery img { width:100%; max-width:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING HEARTS -->
+<div id="hearts"></div>
+
+<!-- 1️⃣ LOGIN PAGE -->
+<div class="container" id="loginPage">
+  <h1>Enter Password</h1>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="checkLogin()">Enter</button>
+</div>
+
+<!-- 2️⃣ MAIN CHOICE PAGE -->
+<div class="container hidden" id="mainPage">
+  <h2>Welcome!</h2>
+  <p>Choose what you want to see:</p>
+  <button onclick="showLetter()">Letter</button>
+  <button onclick="showGallery()">Gallery</button>
+</div>
+
+<!-- 3️⃣ LETTER PAGE -->
+<div class="container hidden" id="letterPage">
+  <h2>Happy Valentine’s Day, Baby</h2>
+  <div class="letter-container">
+    <p>
+I don’t know when it happened.<br>
+I don’t know how.<br><br>
+
+Somewhere between the quiet moments and the loud ones, you became my constant thought.<br><br>
+
+You stay in my mind without permission, in my heart without effort, and in my future without question.<br><br>
+
+I get protective. I get jealous. I get obsessed. Not because I doubt us — but because the idea of a world without you has never felt possible.<br><br>
+
+Loving you feels permanent. Intentional. Inevitable.<br><br>
+
+If nothing else is certain, this is: you are chosen. Every day. In every lifetime.<br><br>
+
+From your man ❤️
+    </p>
+  </div>
+  <button class="back-btn" onclick="showMain()">← Back</button>
+</div>
+
+<!-- 4️⃣ GALLERY PAGE -->
+<div class="container hidden" id="galleryPage">
+  <h2>Scrapbook Gallery</h2>
+  <div class="gallery">
+    <img src="images/pic1.jpg" alt="Photo 1">
+    <img src="images/pic2.jpg" alt="Photo 2">
+    <img src="images/pic3.jpg" alt="Photo 3">
+    <img src="images/pic4.jpg" alt="Photo 4">
+    <img src="images/pic5.jpg" alt="Photo 5">
+  </div>
+  <button class="back-btn" onclick="showMain()">← Back</button>
+</div>
+
+<script>
+// FLOATING HEARTS
+for(let i=0;i<10;i++){
+  const heart=document.createElement('div');
+  heart.className='heart';
+  heart.style.left=Math.random()*window.innerWidth+'px';
+  heart.style.animationDuration=(3+Math.random()*2)+'s';
+  heart.style.opacity=Math.random();
+  document.body.appendChild(heart);
+}
+
+// LOGIN
+function checkLogin(){
+  const user=document.getElementById('username').value;
+  const pass=document.getElementById('password').value;
+  if(user==='divine' && pass==='obsessed'){
+    showMain();
+  } else {
+    alert('Incorrect username or password');
+  }
+}
+
+// PAGE FLOW
+function hideAll(){
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('mainPage').classList.add('hidden');
+  document.getElementById('letterPage').classList.add('hidden');
+  document.getElementById('galleryPage').classList.add('hidden');
+}
+function showMain(){ hideAll(); document.getElementById('mainPage').classList.remove('hidden'); }
+function showLetter(){ hideAll(); document.getElementById('letterPage').classList.remove('hidden'); }
+function showGallery(){ hideAll(); document.getElementById('galleryPage').classList.remove('hidden'); }
+
+</script>
+</body>
+</html>
